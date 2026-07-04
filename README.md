@@ -28,7 +28,7 @@ Piro25_PythonGame_1/
     ├── game_lhh.py   # 김밥말이/훈민정음 (이환희)
     ├── game_jsh.py   # 기억력 게임 (정승현)
     └── game_sea.py   # 지하철 게임 (신은아)
-
+```
 
 ---
 
