@@ -66,8 +66,3 @@ def play_game_4(names, turn_idx):
         idx += 1
     
     return []               
-
-if __name__ == "__main__":
-    #단독 실행 테스트용
-    test_names = ["나", "현아", "환희"]
-    print(play_game_4(test_names, 0))
