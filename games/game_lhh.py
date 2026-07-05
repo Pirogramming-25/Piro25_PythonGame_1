@@ -54,7 +54,7 @@ def play_game_3(names, turn_idx):
 
         for p in performers:
             if p == names[0]:  # 내 차례라면 -> 아까 받은 answer로 채점
-                if answer == "김밥말아 \n":
+                if answer == "김밥말아":
                     print(f"   -> ✅ 정답! 잘 외쳤습니다.\n")
                 else:
                     print(f"   -> 😵 실수! 당신 차례였는데 못 외쳤습니다.\n")
