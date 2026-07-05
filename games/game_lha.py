@@ -156,10 +156,3 @@ def play_game_2(names, turn_idx):
         current_idx = (current_idx + 1) % len(names)
 
     return losers
-
-if __name__ == "__main__":
-
-    members = ["은아", "영은", "승현", "현아", "환희"]
-    
-    final_losers = play_game_2(members, 0)
-
