@@ -6,11 +6,11 @@
 ## 👥 팀원 & 역할 분담
 | 이름 | 담당 게임 | 파일명 | 함수명 |
 | :--- | :--- | :--- | :--- |
-| **서영은** | 시장에 가면 | `games/game_sye.py` | `play_market_game(names, turn_idx)` |
-| **임현아** | 폭탄 돌리기 | `games/game_lha.py` | `play_bomb_game(names, turn_idx)` |
-| **이환희** | 김밥말이/훈민정음 | `games/game_lhh.py` | `play_gimbap_game(names, turn_idx)` |
-| **정승현** | 배스킨라빈스 31 | `games/game_jsh.py` | `play_memory_game(names, turn_idx)` |
-| **신은아** | 지하철 게임 | `games/game_sea.py` | `play_subway_game(names, turn_idx)` |
+| **서영은** | 시장에 가면 | `games/game_sye.py` | `play_game_1(names, turn_idx)` |
+| **임현아** | 폭탄 돌리기 | `games/game_lha.py` | `play_game_2(names, turn_idx)` |
+| **이환희** | 김밥말이 | `games/game_lhh.py` | `play_game_3(names, turn_idx)` |
+| **정승현** | 배스킨라빈스 31 | `games/game_jsh.py` | `play_game_4(names, turn_idx)` |
+| **신은아** | 지하철 게임 | `games/game_sea.py` | `play_game_5(names, turn_idx)` |
 
 ---
 
