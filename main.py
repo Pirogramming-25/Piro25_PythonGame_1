@@ -1,5 +1,6 @@
 
 import random
+import time
 from games.game_sye import play_game_1
 from games.game_lha import play_game_2
 from games.game_lhh import play_game_3
@@ -30,14 +31,14 @@ class Player:
 
 
 # ==============================================================================
-# [메인 게임 시스템 클래스] 전체 게임 흐름을 제어합니다.
+# [메인 게임 클래스]
 # ==============================================================================
 class AlcoholGame:
     def __init__(self):
         self.players = []       # Player 객체 리스트 [user, 컴1, 컴2, 컴3]
         self.user_name = ""
         
-        # 게임 리스트 매핑 (출력 및 실행용)
+        # 게임 리스트
         self.mini_games = {
             1: ('시장에 가면 (서영은)', play_game_1),
             2: ('폭탄 돌리기 (임현아)', play_game_2),
@@ -48,12 +49,23 @@ class AlcoholGame:
 
     # 1. 게임 시작(인트로)
     def print_intro(self):
-        intro_art = """인트로"""
+        intro_art = r"""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    _     _      ____    ___   _   _   ___   _         ____     _     _      _  _____   
+   / \   | |    / ___|  / _ \ | | | | / _ \ | |       / ___|   / \   | \   / | | ____|  
+  / _ \  | |   | |     | | | || |_| || | | || |      | |  _   / _ \  |  \_/  | |  _|    
+ / ___ \ | |___| |___  | |_| ||  _  || |_| || |___   | |_| | / ___ \ | |\_/| | | |___   
+/_/   \_\|_____|\____|  \___/ |_| |_| \___/ |_____|   \____|/_/   \_\|_|   |_| ||_____|  
+                                                                                                 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ヽ(≥o≤)ノ ヽ(≥o≤)ノ       안주 먹을🍗 시간은⏰ 없어요❌ 마시면서🍻 배우는 술게임🎮       ヽ(≥o≤)ノ ヽ(≥o≤)ノ
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        """
         print(intro_art)
         
-        choice = input("게임을 진행할까요? (y/n) : ").strip().lower()
+        choice = input("👉 게임을 진행할까요? (y/n) : ").strip().lower()
         if choice != 'y':
-            print("게임을 종료합니다. 다음에 만나요!")
+            print("게임을 종료합니다. 다음에 만나요! 👋")
             exit()
 
     def setup_user(self):
@@ -61,13 +73,14 @@ class AlcoholGame:
         user_name = input("\n오늘 거하게 취해볼 당신의 이름은?: ").strip()
 
         # 3. 본인의 주량 선택하기
-        print("\n소주 기준 당신의 주량은?")
+        print("\n================ 소주 기준 당신의 주량은? ================")
         print("1. 소주 반병(2잔)\n2. 소주 반병에서 한병 (4잔)\n3. 소주 한병에서 한병반 (6잔)")
         print("4. 소주 한병 반에서 두병(8잔)\n5. 소주 두병 이상 (10잔)")
-        
+        print("==========================================================")
+
         while True:
             try:
-                capacity_choice = int(input("당신의 치사량(주량)은 얼마만큼인가요?(1~5을 선택해주세요): "))
+                capacity_choice = int(input("💡 당신의 치사량(주량)은 얼마만큼인가요?(1~5을 선택해주세요): "))
                 if capacity_choice in [1, 2, 3, 4, 5]:
                     user_capacity = capacity_choice * 2
                     break
@@ -76,14 +89,13 @@ class AlcoholGame:
             except ValueError:
                 print("[오류] 올바른 숫자를 입력해주세요.")
         
-        # Player 객체를 생성하여 저장
         user_player = Player(name=user_name, drink_limit=user_capacity)
         self.players.append(user_player)
         self.user_name = user_name
 
     # 4. 같이 대결할 사람 초대하기
     def invite_friends(self):
-        print("함께 취할 친구들은 얼마나 필요하신가요?(사회적 거리두기로 인해 최대 3명까지 초대할 수 있어요!)")
+        print("\n💬 함께 취할 친구들은 얼마나 필요하신가요?(최대 3명)")
         
         while True:
             try:
@@ -101,11 +113,13 @@ class AlcoholGame:
             
         chosen_names = random.sample(candidate_names, invite_count)
         
+        print("\n✨ [초대 완료] 오늘 함께 취할 멤버입니다!")
         for name in chosen_names:
             random_limit = random.choice([2, 4, 6, 8, 10]) # 주량이 2의 배수말고 다른 숫자도 되면 수정 필요
             friend = Player(name=name, drink_limit=random_limit)
             self.players.append(friend)
-            print(f"오늘 함께 취할 친구는 {name}입니다! (치사량: {random_limit}잔)")
+            print(f"👤 {name} (치사량: {random_limit}잔)")
+            time.sleep(0.4)
 
         self.print_status()
 
@@ -124,11 +138,6 @@ class AlcoholGame:
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
-
-# 5. 게임을 선택하면, 각 게임이 실행됨
-# 6. 게임 결과를 반영하여 현재 결과를 출력ㄴ
-# 7. 누군가 치사량에 도달한다면 -> 게임 종료
-
     def game_loop(self):
         turn_idx = 0  # 0은 플레이어(유저), 그 외는 컴퓨터 친구들의 턴
         
@@ -138,6 +147,7 @@ class AlcoholGame:
             current_turn_player = self.players[turn_idx]
             
             # 게임 시작 전 진행 의사 체크 
+            time.sleep(1.0)
             print(f"\n술게임 진행중! 현재는 {current_turn_player.name}의 게임 선택 턴입니다.") 
             exit_choice = input("그만하고 싶으면 'exit'를, 계속하고 싶으면 아무 키나 입력해 주세요!: ").strip().lower() 
             if exit_choice == 'exit':
@@ -166,10 +176,10 @@ class AlcoholGame:
             
             
             player_names = [p.name for p in self.players]            
-            # 미니게임 실행 및 패배자 받아오기
+            # 미니게임 실행 및 loser 받아오기
             loser_names = game_func(player_names, turn_idx)
             
-            # 벌주 마시기 처리
+            # 벌주 마시기
             if loser_names:
                 print("\n아~ 누가누가 술을 마셔! 🍷")
                 for name in loser_names:
